@@ -25,18 +25,6 @@ class App extends React.Component {
     this.getData();
   }
 
-  removeItems = async () => {
-    try {
-      await AsyncStorage.removeItem('orders');
-    } catch (err) {
-      console.log(err);
-    }
-    const orders = this.getData();
-    orders.then((res) => {
-      this.setState({ orders: res });
-    });
-  };
-
   handleOrder = (item, quantity, id) => {
     const orders = [...this.state.orders];
     orders.push({ ...item, quantity, id });

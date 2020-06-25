@@ -178,6 +178,18 @@ export default class Order extends Component {
   getTip() {
     return (this.state.selectedTip / 100) * this.getGrandTotal();
   }
+
+  handleCheckOut = async () => {
+    try {
+      await AsyncStorage.removeItem('orders');
+    } catch (err) {
+      console.log(err);
+    }
+    const orders = this.getData();
+    orders.then((res) => {
+      this.setState({ orders: res });
+    });
+  };
   render() {
     const { orders } = this.state;
     return (
@@ -205,7 +217,10 @@ export default class Order extends Component {
           }}
         >
           <View
-            style={{ flexDirection: 'column', justifyContent: 'space-between' }}
+            style={{
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
           >
             <Text style={{ marginBottom: 10, marginTop: 20 }}>
               Select Tip %:{' '}
@@ -222,13 +237,19 @@ export default class Order extends Component {
             </View>
           </View>
           <View
-            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
           >
             <Text style={{ fontSize: 20 }}>Total: </Text>
             <Text style={{ fontSize: 25 }}>{this.getGrandTotal()}</Text>
           </View>
           <View
-            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
           >
             <Text style={{ fontSize: 20 }}>Grand Total: </Text>
             <Text style={{ fontSize: 25 }}>
@@ -236,6 +257,23 @@ export default class Order extends Component {
             </Text>
           </View>
         </View>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#E83151',
+            paddingVertical: 10,
+            alignItems: 'center',
+            borderRadius: 10,
+            paddingHorizontal: 5,
+            marginVertical: 40,
+            backgroundColor: !(this.state.orders.length == 0)
+              ? '#E83151'
+              : 'rgba(232, 49, 81, .4)',
+          }}
+          onPress={() => this.handleCheckOut()}
+          disabled={this.state.orders.length == 0}
+        >
+          <Text style={{ color: '#fff' }}>Check out</Text>
+        </TouchableOpacity>
       </ScrollView>
     );
   }
