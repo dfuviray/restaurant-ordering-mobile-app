@@ -22,7 +22,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "restaurant-ordering-app-dv"
+    },
+    "android": {
+      "package": "restaurant-ordering-app-dv"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }
